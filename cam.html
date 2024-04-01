@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera Access</title>
+<style>
+    #video-container {
+        margin: auto;
+        width: 100%;
+        max-width: 400px;
+    }
+    #video {
+        width: 100%;
+        height: auto;
+    }
+</style>
+</head>
+<body>
+<h1>crush update</h1>
+<div id="video-container">
+    <video id="video" autoplay playsinline></video>
+</div>
+
+<script>
+    // Function to handle errors
+    function handleError(error) {
+        console.error('Error accessing the camera: ', error);
+    }
+
+    // Function to start the camera
+    async function startCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const videoElement = document.getElementById('video');
+            videoElement.srcObject = stream;
+        } catch (error) {
+            handleError(error);
+        }
+    }
+
+    // Check if the browser supports getUserMedia
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        startCamera();
+    } else {
+        console.error('getUserMedia is not supported in this browser.');
+    }
+</script>
+</body>
+</html>
